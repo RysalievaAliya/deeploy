@@ -26,12 +26,12 @@ const ContactContextProvider = ({ children }) => {
   // console.log(state.contactToEdit);
 
   const addContact = async (newContact) => {
-    await axios.post("http://localhost:8000/contacts", newContact);
+    await axios.post(`${API}`, newContact);
     getContacts();
   };
 
   const getContacts = async () => {
-    let { data } = await axios("http://localhost:8000/contacts");
+    let { data } = await axios(`${API}`);
     dispatch({
       type: "GET_CONTACTS",
       payload: data,
@@ -39,12 +39,12 @@ const ContactContextProvider = ({ children }) => {
   };
 
   const deleteContact = async (id) => {
-    await axios.delete(`http://localhost:8000/contacts/${id}`);
+    await axios.delete(`${API}${id}`);
     getContacts();
   };
 
   const editContact = async (id) => {
-    let { data } = await axios(`http://localhost:8000/contacts/${id}`);
+    let { data } = await axios(`${API}${id}`);
 
     let action = {
       type: "EDIT_CONTACT",
@@ -55,7 +55,7 @@ const ContactContextProvider = ({ children }) => {
 
   const saveContact = async (newContact) => {
     await axios.patch(
-      `http://localhost:8000/contacts/${newContact.id}`,
+      `${API}${newContact.id}`,
       newContact
     );
     getContacts();
